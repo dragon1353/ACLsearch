@@ -44,3 +44,4 @@ C:\Users\hucode\source\repos\ACL\ACL\obj\Debug\net6.0-windows\ACL.dll
 C:\Users\hucode\source\repos\ACL\ACL\obj\Debug\net6.0-windows\refint\ACL.dll
 C:\Users\hucode\source\repos\ACL\ACL\obj\Debug\net6.0-windows\ACL.pdb
 C:\Users\hucode\source\repos\ACL\ACL\obj\Debug\net6.0-windows\ref\ACL.dll
+C:\Users\hucode\source\repos\ACL\ACL\obj\Debug\net6.0-windows\ACL.Form2.resources

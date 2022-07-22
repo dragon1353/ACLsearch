@@ -1,7 +1,6 @@
 namespace ACL
 {
     using System.Diagnostics;
-    using System.Reflection;
     using Excel = Microsoft.Office.Interop.Excel;
     using PowerShell = System.Management.Automation.PowerShell;
 
@@ -13,6 +12,7 @@ namespace ACL
         }
         public bool itembox = true;//初始化寫入combobox清單
         private int item = -1;//判斷伺服器是否有改
+
         private void button2_Click(object sender, EventArgs e)
         {
             Close();//關閉程式
@@ -33,6 +33,7 @@ namespace ACL
                 //取得工作表
                 try
                 {
+                    Cursor.Current = Cursors.WaitCursor;//滑鼠loading
                     bool IDcheck, ACLcheck;//資料比對是否有涵蓋
                     //初始化欄位數值
                     Excel._Worksheet wst = (Excel._Worksheet)wb.Worksheets["data"];
@@ -106,7 +107,7 @@ namespace ACL
             {
                 MessageBox.Show("無檔案可查詢");
             }
-
+            Cursor.Current = Cursors.Default;//滑鼠恢復
         }
         //依據選擇伺服器來判斷要執行哪個ps1的function
         private static void Getfile(string path)
@@ -115,9 +116,9 @@ namespace ACL
             {
                 File.GetAttributes(path);
                 string cmd = Path.Combine(Directory.GetCurrentDirectory(), path);
+                Cursor.Current = Cursors.WaitCursor;//滑鼠loading
                 var process = new Process();
                 process.StartInfo.FileName = @"Powershell.exe";
-                //process.StartInfo.Arguments = @"-noexit " + cmd;
                 process.StartInfo.Arguments = cmd;
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.CreateNoWindow = true;
@@ -223,6 +224,7 @@ namespace ACL
                         p.Kill();
                 }
                 MessageBox.Show("已完成資料索引");
+                Cursor.Current = Cursors.Default;//滑鼠恢復
             }
             else
             {
@@ -304,7 +306,7 @@ namespace ACL
 
         private void dataGridView1_Resize(object sender, EventArgs e)
         {
-            this.dataGridView1.Columns[2].Width = dataGridView1.Width - dataGridView1.Columns[0].Width - dataGridView1.Columns[1].Width;
+            dataGridView1.Columns[2].Width = dataGridView1.Width - dataGridView1.Columns[0].Width - dataGridView1.Columns[1].Width;
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -423,16 +425,32 @@ namespace ACL
 #pragma warning disable CS8600 // 正在將 Null 常值或可能的 Null 值轉換為不可為 Null 的型別。
                     url = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
 #pragma warning restore CS8600 // 正在將 Null 常值或可能的 Null 值轉換為不可為 Null 的型別。
-                    //MessageBox.Show(url);
                     Process.Start("Explorer.exe", $"/e, {url}");
                 }
-                catch (Exception)
+                catch (NullReferenceException)
                 {
 
-                    MessageBox.Show("無資料");
+                    MessageBox.Show("無資料夾或資料");
                 }
             }
-
+            else if (e.ColumnIndex == 1)
+            {
+                try
+                {
+                    string? keyword;
+                    dataGridView1.Focus();
+                    keyword = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
+#pragma warning disable CS8602 // 可能 null 參考的取值 (dereference)。
+                    keyword = keyword.Replace(@"DOMAIN\", "");
+#pragma warning restore CS8602 // 可能 null 參考的取值 (dereference)。
+                    Form2 form2 = new(keyword);
+                    form2.ShowDialog(this);
+                }
+                catch (NullReferenceException)
+                {
+                    MessageBox.Show("無群組或資料");
+                }
+            }
         }
     }
 }

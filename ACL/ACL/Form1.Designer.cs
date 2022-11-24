@@ -140,7 +140,8 @@
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
             "請選擇伺服器",
-            "192.168.1.10",
+            "192.168.1.10-管理部",
+            "192.168.1.10-業務部",
             "192.168.1.110"});
             this.comboBox2.Location = new System.Drawing.Point(22, 75);
             this.comboBox2.Name = "comboBox2";

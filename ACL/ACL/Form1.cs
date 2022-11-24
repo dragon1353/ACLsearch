@@ -152,18 +152,22 @@ namespace ACL
             try
             {
                 string path = "";
-                switch (comboBox2.Text)
+                switch (comboBox2.SelectedIndex)
                 {
-                    case "192.168.1.10":
-                        path = @"C:\ACL\NETHS1-G.ps1";
-                        Getfile(path);
-                        break;
-                    case "192.168.1.110":
+                     case 1:
+                         path = @"C:\ACL\NETHS1-G_MANAGE.ps1";
+                         Getfile(path);
+                         break;
+                     case 2:
+                         path = @"C:\ACL\NETHS1-G_SALES.ps1";
+                         Getfile(path);
+                         break;
+                    case 3:
                         path = @"C:\ACL\NETHS1-F.ps1";
                         Getfile(path);
                         break;
                     default:
-                        MessageBox.Show("請選擇伺服器");
+                        MessageBox.Show("");
                         break;
                 }
                 //先判斷有沒有生成檔案
@@ -172,7 +176,7 @@ namespace ACL
             {
                 MessageBox.Show("選擇伺服器時造成意外中斷");
             }
-            if (System.IO.File.Exists(pathdata) && (comboBox2.SelectedIndex == 1 || comboBox2.SelectedIndex == 2))
+            if (System.IO.File.Exists(pathdata) && (comboBox2.SelectedIndex >0))
             {
                 //讀取EXCEL
                 Excel.Application app = new();
@@ -327,18 +331,22 @@ namespace ACL
                 try
                 {
                     string path = "";
-                    switch (comboBox2.Text)
+                    switch (comboBox2.SelectedIndex)
                     {
-                        case "192.168.1.10":
-                            path = @"C:\ACL\NETHS1-G.ps1";
+                        case 1:
+                            path = @"C:\ACL\NETHS1-G_MANAGE.ps1";
                             Getfile(path);
                             break;
-                        case "192.168.1.110":
+                        case 2:
+                            path = @"C:\ACL\NETHS1-G_SALES.ps1";
+                            Getfile(path);
+                            break;
+                        case 3:
                             path = @"C:\ACL\NETHS1-F.ps1";
                             Getfile(path);
                             break;
                         default:
-                            MessageBox.Show("請選擇伺服器");
+                            MessageBox.Show("");
                             break;
                     }
                     //先判斷有沒有生成檔案
@@ -347,7 +355,7 @@ namespace ACL
                 {
                     MessageBox.Show("選擇伺服器時造成意外中斷");
                 }
-                if (System.IO.File.Exists(pathdata) && (comboBox2.SelectedIndex == 1 || comboBox2.SelectedIndex == 2))
+                if (System.IO.File.Exists(pathdata) && (comboBox2.SelectedIndex >0))
                 {
                     //讀取EXCEL
                     Excel.Application app = new();
